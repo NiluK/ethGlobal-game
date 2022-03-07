@@ -4,7 +4,10 @@ import Preloader from "./scenes/Preloader";
 import Game from "./scenes/Game";
 import GameUI from "./scenes/GameUI";
 import Moralis from "moralis/dist/moralis.min.js";
-import '@fortawesome/fontawesome-free/css/all.css'
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
 const DEFAULT_HEIGHT = 720 // any height you want
 const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT
