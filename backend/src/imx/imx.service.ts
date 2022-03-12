@@ -71,9 +71,9 @@ export class ImxService {
 
       await this.admin.mintV2(payload);
 
-      await this.metadataService.createWithRandom(tokenId.toString());
-
-      return await this.imxModel.create({ tokenId: Number(tokenId), user: walletAddress, inWallet: isUserExist != null });
+      const metadata = await this.metadataService.createWithRandom(tokenId.toString());
+      const transaction = await this.imxModel.create({ tokenId: Number(tokenId), user: walletAddress, inWallet: isUserExist != null });
+      return { ...transaction, metadata };
 
     } catch (error) {
       throw new HttpException(
