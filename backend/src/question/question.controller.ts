@@ -28,4 +28,9 @@ export class QuestionController {
     return this.questionService.findAll(queryQuestionDto);
   }
 
+  @Get(':chestId')
+  async getOne(@Param() params): Promise<any> {
+    return this.questionService.findByChestId(params.chestId);
+  }
+
 }

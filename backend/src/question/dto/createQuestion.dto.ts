@@ -23,4 +23,7 @@ export class CreateQuestiontDto {
 
     @IsDefined()
     accessToken:String;
+
+    @IsDefined()
+    chestId:String;
 }

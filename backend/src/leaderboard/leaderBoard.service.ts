@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Answer } from './leaderBoard.model';
+import { Answer } from '../answer/answer.model';
 import { QueryLearderBoardDto } from './dto';
 
 @Injectable()

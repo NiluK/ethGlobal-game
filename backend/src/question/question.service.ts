@@ -22,5 +22,9 @@ export class QuestionService {
     return this.questionModel.findById(questionId).exec();
   }
 
+  async findByChestId(chestId: string): Promise<Question> {
+    return this.questionModel.findOne({ chestId }, { correctIndex:0 }).exec();
+  }
+
 }
 

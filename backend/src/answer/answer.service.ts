@@ -11,5 +11,9 @@ export class AnswerService {
     const createAnswer = new this.answerModel(answer);
     return createAnswer.save();
   }
+
+  async findAnswer(query): Promise<Answer> {
+    return this.answerModel.findOne(query);
+  }
 }
 
