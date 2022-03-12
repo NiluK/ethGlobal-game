@@ -7,13 +7,17 @@ import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { ImmutableXClient, ImmutableMethodParams, ERC721TokenType } from '@imtbl/imx-sdk';
 import { BigNumber } from '@ethersproject/bignumber/';
+import { MetadataService } from 'src/metadata/metadata.service';
+import { CreateMetadataDto } from 'src/metadata/dto';
 
 @Injectable()
 export class ImxService {
 
   admin:ImmutableXClient;
 
-  constructor(@InjectModel('Imx') private readonly imxModel: Model<Imx>) {
+  constructor(
+    @InjectModel('Imx') private readonly imxModel: Model<Imx>,
+    private readonly metadataService:MetadataService) {
     const client = {
       starkContractAddress: process.env.STARK_CONTRACT_ADDRESS,
       registrationContractAddress: process.env.REGISTRATION_ADDRESS,
@@ -66,6 +70,8 @@ export class ImxService {
       ];
 
       await this.admin.mintV2(payload);
+
+      await this.metadataService.createWithRandom(tokenId.toString());
 
       return await this.imxModel.create({ tokenId: Number(tokenId), user: walletAddress, inWallet: isUserExist != null });
 

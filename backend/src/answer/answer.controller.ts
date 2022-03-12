@@ -28,6 +28,7 @@ import {
       let isCorrect = false;
       let message = "You loose 😞";
       const question = await this.questionService.findOne(submitAnswer.questionId);
+      if(!question) throw new HttpException('question not found', HttpStatus.NOT_FOUND);
       const isAlreadyAnswered = await this.answerService.findAnswer({ user: submitAnswer.user, questionId:question._id });
       if(isAlreadyAnswered) throw new HttpException('already answered', HttpStatus.BAD_REQUEST);
       if(!question) throw new HttpException('question not found', HttpStatus.NOT_FOUND);
