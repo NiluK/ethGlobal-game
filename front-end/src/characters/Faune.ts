@@ -50,9 +50,9 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         const coinNumber = document.getElementById("coin-number");
         coinNumber!.innerHTML = this._coins.toString();
         sceneEvents.emit("player-coins-changed", this._coins);
-      }else {
-		this.openModal()
-	  }
+      } else {
+        this.openModal();
+      }
 
       return;
     }
@@ -94,16 +94,42 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  openModal() {
-    this.scene.add
-      .text(16, 16, "Need key to open the chest", {
-        font: "18px monospace",
-        color: "black",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#FBD99A",
-      })
-      .setScrollFactor(0)
-      .setDepth(30);
+  async openModal() {
+    console.log(this.activeChest);
+    if (this.activeChest) {
+      console.log(this.activeChest);
+      try {
+        const question = await fetch(
+          `http://localhost:3000/questions/1`
+          // `http://localhost:3000/questions/${this.activeChest?.chestId}`
+        );
+        const data = await question.json();
+
+        document.getElementById("modal")!.style.display = "block";
+
+        const modalTitle = document.getElementById("modalQuestion");
+        const modalBody = document.getElementById("modalBody");
+
+        const options = data.options.map((option) => {
+          return `
+          <div class="form-check">
+          <input class="form-check-input" type="radio" name="${data._id}" id="${option._id}">
+          <label class="form-check-label" for=${data._id}>
+          ${option.text}
+        </label>
+        </div>
+          `;
+        });
+        console.log(data);
+        console.log(options);
+        modalTitle!.innerHTML = data.questionText;
+        modalBody!.innerHTML = `
+      ${options.join("")}
+        `;
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 }
 
