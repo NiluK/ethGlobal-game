@@ -31,6 +31,15 @@ function login() {
 }
 
 document.getElementById("btn-submit")!.onclick = submitAnswer;
+const closeButton = document.getElementById("btn-close")
+closeButton!.onclick = closeModal();
+
+function closeModal() {
+    console.log("close")
+    const md = console.log(document.getElementById("modal"));
+    //md.modal('hide');
+    $('#modal').modal('hide')
+}
 
 async function submitAnswer() {
 
@@ -58,6 +67,10 @@ async function submitAnswer() {
       questionId: question,
       user: user,
     }),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
   });
   const json = await data.json();
   console.log(json);
