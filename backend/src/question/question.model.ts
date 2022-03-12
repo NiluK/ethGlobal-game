@@ -6,7 +6,8 @@ export const QuestionSchema = new moongose.Schema({
     questionLevel: Number,
     options: [{ text: String }],
     correctIndex: Number,
-    questionCategory: String
+    questionCategory: String,
+    chestId: String
 });
 
 
@@ -20,5 +21,6 @@ export interface Question extends moongose.Document {
     questionLevel: Number;
     correctIndex: Number;
     questionCategory: String;
+    chestId: String;
     options:Array<Options>;
 }

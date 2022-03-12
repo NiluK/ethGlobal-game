@@ -12,10 +12,12 @@ import {
 } from '@nestjs/common';
 import { ClaimDto } from './dto';
 import { ImxService } from './imx.service';
+import { LeaderBoardService } from 'src/leaderboard/leaderBoard.service';
+
 
 @Controller('imx')
 export class ImxController {
-  constructor(private readonly imxService: ImxService) {}
+  constructor(private readonly imxService: ImxService, private readonly leaderBoardService:LeaderBoardService) {}
 
   @Post('/claim')
   async claimToken(@Body() claimDto: ClaimDto) {
@@ -41,8 +43,8 @@ export class ImxController {
     let user:any = {};
     const walletDetails = await this.imxService.findOne({ user: walletAddress });
     user.wallet = walletDetails;
-   // user.score = await this.leaderBoardService.getLeaderBoard({ user: walletAddress, sort:null });
-
+    const scores = await this.leaderBoardService.getLeaderBoard({ user: walletAddress, sort:null });
+    user.score = scores[0]?.count;
     return user
   }
 }

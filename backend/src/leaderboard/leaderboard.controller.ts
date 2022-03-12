@@ -14,14 +14,14 @@ import {
   import { QueryLearderBoardDto } from './dto';
 
   
-  @Controller('leader-board')
+  @Controller('leaderboard')
   export class LeaderBoardController {
     constructor( private readonly leaderBoardService: LeaderBoardService) {
     }
   
     @Get()
     async getLeaderBoard(@Query() queryLearderBoard:QueryLearderBoardDto): Promise<any> {
-      return this.leaderBoardService.getLeaderBoard(queryLearderBoard)
+      return this.leaderBoardService.getLeaderBoard(queryLearderBoard);
     }
   
   }
