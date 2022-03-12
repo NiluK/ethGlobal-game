@@ -33,3 +33,9 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+backend/dist/
+backend/node_modules/
+front-end/.cache/
+front-end/dist/
+front-end/node_modules/
