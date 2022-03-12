@@ -1,6 +1,0 @@
-reresources/dungeon-01.tmx filter=lfs diff=lfs merge=lfs -text
-public/dungeons filter=lfs diff=lfs merge=lfs -text
-public/items filter=lfs diff=lfs merge=lfs -text
-public/tiles filter=lfs diff=lfs merge=lfs -text
-public/ui filter=lfs diff=lfs merge=lfs -text
-public/character filter=lfs diff=lfs merge=lfs -text
