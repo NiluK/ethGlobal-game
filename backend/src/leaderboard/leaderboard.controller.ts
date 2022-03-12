@@ -17,13 +17,11 @@ import {
   @Controller('leader-board')
   export class LeaderBoardController {
     constructor( private readonly leaderBoardService: LeaderBoardService) {
-      console.log("HDFNDKFND KDNFKJDNF")
     }
   
     @Get()
     async getLeaderBoard(@Query() queryLearderBoard:QueryLearderBoardDto): Promise<any> {
       return this.leaderBoardService.getLeaderBoard(queryLearderBoard)
-
     }
   
   }
