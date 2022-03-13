@@ -95,9 +95,9 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
   }
 
   async openModal() {
-    console.log(this.activeChest);
+    //console.log(this.activeChest);
     if (this.activeChest) {
-      console.log(this.activeChest);
+      //console.log(this.activeChest);
       try {
         const question = await fetch(
           `http://localhost:3000/questions/1`
