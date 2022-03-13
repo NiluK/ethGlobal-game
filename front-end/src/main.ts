@@ -31,24 +31,60 @@ function login() {
 }
 
 document.getElementById("btn-submit")!.onclick = submitAnswer;
-const closeButton = document.getElementById("btn-close")
-closeButton!.onclick = closeModal();
+document.getElementById("btn-close")!.onclick = closeModal;
+document.getElementById("btn-leaderboard-close")!.onclick = closeLeaderboard;
 
+document.getElementById("btn-leaderboard")!.onclick = showLeaderboard;
+
+async function showLeaderboard() {
+  try {
+    const leaderboard = await fetch(
+      `https://citizen-global.herokuapp.com/leaderboard`
+      // `http://localhost:3000/questions/${this.activeChest?.chestId}`
+    );
+    const json = await leaderboard.json();
+    const modalBody = document.getElementById("leaderboardBody");
+    const options = json.map((score) => {
+      return `
+      <li class="list-group-item disabled" aria-disabled="true">User: ${score.user} Score: ${score.count} </li>
+      `;
+    });
+    modalBody!.innerHTML = `
+    <ul class="list-group">
+  ${options.join("")}
+  </ul>
+  `;
+    document.getElementById("leaderboard")!.style.display = "block";
+  } catch (error) {
+    console.log(error);
+  }
+  document.getElementById("leaderboard")!.style.display = "block";
+}
 function closeModal() {
-    console.log("close")
-    const md = console.log(document.getElementById("modal"));
-    //md.modal('hide');
-    $('#modal').modal('hide')
+  const md = document.getElementById("modal");
+  md!.style.display = "none";
+}
+
+function closeLeaderboard() {
+  const md = document.getElementById("leaderboard");
+  md!.style.display = "none";
 }
 
 async function submitAnswer() {
-
+  const spinner = `
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Submitting...
+  `;
+  const submitButton = document.getElementById("btn-submit");
+  submitButton!.innerHTML = spinner;
+  const errorMessage = document.getElementById("errorMessage");
+  if (errorMessage) {
+    errorMessage.parentNode!.removeChild(errorMessage);
+  }
   const user = Moralis.User.current().attributes.ethAddress;
-  console.log("user", user);
   var radioGroup = document.getElementById("modalBody");
   var radios = radioGroup!.getElementsByTagName("input");
   const question = radios[0].name;
-  console.log(radios);
   var selected = 0;
   for (var i = 0; i < radios!.length; i++) {
     if (radios![i].checked) {
@@ -56,11 +92,7 @@ async function submitAnswer() {
       break;
     }
   }
-  console.log("selected", selected);
-  console.log(question);
-  console.log("user", user);
-
-  const data = await fetch("http://localhost:3000/answers", {
+  const data = await fetch("https://citizen-global.herokuapp.com/answers", {
     method: "POST",
     body: JSON.stringify({
       answerIndex: selected,
@@ -68,12 +100,27 @@ async function submitAnswer() {
       user: user,
     }),
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
   });
   const json = await data.json();
-  console.log(json);
+  if (!json.isCorrect) {
+    const modalBody = document.getElementById("modalBody");
+    modalBody!.insertAdjacentHTML(
+      "beforeend",
+      `<div id="errorMessage" class="alert alert-danger mt-3" role="alert"> I'm sorry, you answered incorrectly. Please try again </div>`
+    );
+  } else {
+    const x = document.getElementById("modalBody");
+    x!.innerHTML = `
+    <div class="alert alert-success" role="alert">Success, here is your NFT</div>
+    <img class="w-100" src=${json.transaction.metadata.image_url} alt="">
+    <p class="mt-2"> Visit the <a href="https://market.ropsten.immutable.com/"> Immutable X marketplace </a> to see and trade your NFT. </p>
+    `;
+    document.getElementById("btn-submit")!.hidden = true;
+  }
+  submitButton!.innerHTML = "Submit Answer";
 }
 
 function launchGame() {

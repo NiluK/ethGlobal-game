@@ -16,6 +16,15 @@ declare global {
   }
 }
 
+const chestMap = {
+  "1039.45546838948, 700.276880479926": 1,
+  "1099.44623904015, 151.130595293032": 2,
+  "1068.29718504845, 1167.51269035533": 3,
+  "110.752191970466, 336.871250576834": 4,
+  "782.187355791417, 349.561605906784": 5,
+  "350.7568066451315, 1180.395939086294": 6,
+}
+
 export default class Faune extends Phaser.Physics.Arcade.Sprite {
   private _coins = 0;
   private isModalActivated: boolean = false;
@@ -95,12 +104,11 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
   }
 
   async openModal() {
-    //console.log(this.activeChest);
     if (this.activeChest) {
-      //console.log(this.activeChest);
+      const chestId = chestMap[`${this.activeChest.x}, ${this.activeChest.y}`];    
       try {
         const question = await fetch(
-          `http://localhost:3000/questions/1`
+          `https://citizen-global.herokuapp.com/questions/${chestId}`
           // `http://localhost:3000/questions/${this.activeChest?.chestId}`
         );
         const data = await question.json();
@@ -109,6 +117,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
         const modalTitle = document.getElementById("modalQuestion");
         const modalBody = document.getElementById("modalBody");
+        document.getElementById("btn-submit")!.hidden = false;
 
         const options = data.options.map((option) => {
           return `

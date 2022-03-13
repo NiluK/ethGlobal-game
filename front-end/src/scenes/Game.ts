@@ -36,7 +36,6 @@ export default class Game extends Phaser.Scene {
     const worldLayer = map.createLayer("World", tileset, 0, 0);
     const aboveLayer = map.createLayer("Above Player", tileset, 0, 0);
     worldLayer.setCollisionByProperty({ collides: true });
-    worldLaye
     const chests = this.physics.add.staticGroup({
       classType: Chest,
     });

@@ -8,9 +8,9 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
 			<a class="navbar-brand" href="#">Citizen</a>
-			<a class="navbar-brand" href="/dashboard">Dashboard</a>
 		</div>
 
+		<button class="btn btn-outline-warning px-3 mx-3 my-2 my-sm-0" id="btn-leaderboard">  Leaderboard </button>
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <span id="coin-number"> 100 </span> <i class="fa-solid fa-coins"></i></button>
 
 	</nav>
@@ -25,16 +25,28 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalQuestion">Modal title</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
 				</div>
 				<div class="modal-body" id="modalBody">
 					Modal Body
 				</div>
 				<div class="modal-footer">
-					<button type="button" id="btn-submit" class="btn btn-primary">Save</button>
+					<button type="button" id="btn-submit" class="btn btn-primary">Submit Answer</button>
 					<button type="button" id="btn-close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="leaderboard" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Leaderboard</h5>
+				</div>
+				<div class="modal-body" id="leaderboardBody">
+					Modal Body
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btn-leaderboard-close" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
