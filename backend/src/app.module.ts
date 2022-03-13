@@ -6,7 +6,6 @@ import { ImxModule } from 'src/imx/imx.module';
 import { AnswerModule } from './answer/answer.module';
 import { LeaderBoardModule } from 'src/leaderboard/leaderBoard.module';
 import { MetadataModule } from 'src/metadata/metadata.module';
-
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
@@ -22,7 +21,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   providers: [AppService],
 })
 export class AppModule {
-  constructor() {
-    console.log("=======================>", process.env)
-  }
+  constructor() { 
+    console.log(process.env)
+   }
 }
