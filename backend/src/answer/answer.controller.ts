@@ -26,17 +26,22 @@ import {
     @Post()
     async submitAnswer(@Body() submitAnswer: SubmitAnswerDto): Promise<any> {
       let isCorrect = false;
+      let transaction;
       let message = "You loose 😞";
       const question = await this.questionService.findOne(submitAnswer.questionId);
       if(!question) throw new HttpException('question not found', HttpStatus.NOT_FOUND);
       const isAlreadyAnswered = await this.answerService.findAnswer({ user: submitAnswer.user, questionId:question._id });
-      if(isAlreadyAnswered) throw new HttpException('already answered', HttpStatus.BAD_REQUEST);
       if(!question) throw new HttpException('question not found', HttpStatus.NOT_FOUND);
       if(question.correctIndex === submitAnswer.answerIndex)  {
         isCorrect = true;
         message ="You win 😀";
+        transaction = await this.imxService.mintFor(submitAnswer.user.toString());
       }
-      const transaction = await this.imxService.mintFor(submitAnswer.user.toString());
+      if(isAlreadyAnswered && question.correctIndex === submitAnswer.answerIndex) {
+        isCorrect = true;
+        message ="You win 😀";
+      }
+
       await this.answerService.create( { ...submitAnswer, isCorrect });
       return { isCorrect, message, transaction }
     }

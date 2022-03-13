@@ -18,10 +18,10 @@ import {
     constructor(
       private readonly metadataService:MetadataService) {}
   
-    @Get(':nftId')
+    @Get(':tokenId')
     async findByNftId(@Param() parameter): Promise<any> {
-      const nftId = parameter.nftId;
-      return await this.metadataService.findByNftId(nftId)
+      const tokenId = parameter.tokenId;
+      return await this.metadataService.findByNftId(tokenId);
     }
  
   }
